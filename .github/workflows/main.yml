@@ -38,7 +38,7 @@ jobs:
         git commit -m "Update exchange_rate.csv"
         
     - name: Push changes
-        env: 
+      env: 
           REPO_ACCESS_TOKEN: ${{ secrets.REPO_ACCESS_TOKEN }}
-        run: |
-          git push https://Abderrahmen:${REPO_ACCESS_TOKEN}@github.com/AbderrahmenDJEBBI/Web_Scraping.git BRANCH
+      run: |
+           git push https://Abderrahmen:${REPO_ACCESS_TOKEN}@github.com/AbderrahmenDJEBBI/Web_Scraping.git BRANCH
