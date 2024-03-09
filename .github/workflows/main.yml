@@ -39,5 +39,6 @@ jobs:
 
     - name: Push 
       run: |
-        git remote add origin https://AbderrahmenDJEBBI:${{ secrets.REPO_ACCESS_TOKEN }}@github.com/AbderrahmenDJEBBI/Web_Scraping.git
-        git push origin HEAD:main
+       git remote set-url origin https://AbderrahmenDJEBBI:${{ secrets.REPO_ACCESS_TOKEN }}@github.com/AbderrahmenDJEBBI/Web_Scraping.git
+       git push origin HEAD:main
+
