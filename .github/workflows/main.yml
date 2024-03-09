@@ -36,4 +36,4 @@ jobs:
         git config --global user.email 'abderrahmen.djebbi@esprit.tn'
         git add exchange_rate.csv
         git commit -m "Update exchange_rate.csv"
-        git push https://${{ Actions secrets and variables.REPO_ACCESS_TOKEN }}@github.com/AbderrahmenDJEBBI/Web_Scraping.git
+        git push https://${{ secrets.REPO_ACCESS_TOKEN }}@github.com/AbderrahmenDJEBBI/Web_Scraping.git
