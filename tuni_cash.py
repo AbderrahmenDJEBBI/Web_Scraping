@@ -44,14 +44,10 @@ chrome_options.add_argument('--disable-infobars')
 chrome_options.add_argument('--disable-notifications')
 chrome_options.add_argument('--window-size=1920x1080')
 chrome_options.add_argument('--disable-features=VizDisplayCompositor')
-
-# Set the timeout explicitly to a reasonable value (e.g., 10 seconds)
-chrome_options.add_argument('--timeout=10')
-
+chrome_options.add_argument('--timeout=10')  # Set the timeout here
 
 # Create a new instance of the Chrome driver with options
-driver = webdriver.Chrome(options=chrome_options)
-
+driver = webdriver.Chrome(options=chrome_options, service_args=['--timeout=10'])
 # Open the URL for Tuni.cash
 driver.get(url_tuni_cash)
 
