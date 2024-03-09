@@ -1,6 +1,7 @@
 name: Run Python script
 
 on:
+  workflow_dispatch:
   schedule:
     - cron: '*/5 * * * *'  # This line sets the action to run every 5 minutes
 
