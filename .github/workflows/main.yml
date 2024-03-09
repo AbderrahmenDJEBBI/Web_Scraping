@@ -32,7 +32,7 @@ jobs:
 
     - name: Commit and push CSV file
       run: |
-        git config --global user.name 'Abderrahmen'
+        git config --global user.name 'AbderrahmenDJEBBI'
         git config --global user.email 'abderrahmen.djebbi@esprit.tn'
         git add exchange_rate.csv
         git commit -m "Update exchange_rate.csv"
