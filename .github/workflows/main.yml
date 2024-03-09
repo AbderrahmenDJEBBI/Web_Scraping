@@ -1,0 +1,36 @@
+name: Run Python script
+
+on:
+  schedule:
+    - cron: '*/5 * * * *'  # This line sets the action to run every 5 minutes
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2  # This step checks out a copy of your repository
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8  # This step sets up Python. Replace '3.8' with your Python version
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install selenium==3.141.0 pandas==1.3.3  # This step installs your dependencies directly.
+
+    - name: Setup ChromeDriver
+      uses: nanasess/setup-chromedriver@master
+
+    - name: Run script
+      run: python tuni_cash.py  # This step runs your script. Replace 'your_script.py' with the path to your Python script
+
+    - name: Commit and push CSV file
+      run: |
+        git config --global user.name 'Abderrahmen'
+        git config --global user.email 'abderrahmen.djebbi@esprit.tn'
+        git add exchange_rate.csv
+        git commit -m "Update exchange_rate.csv"
+        git push
