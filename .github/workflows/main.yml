@@ -37,8 +37,11 @@ jobs:
         git add exchange_rate.csv
         git commit -m "Update exchange_rate.csv"
 
+    - name: Pull changes
+      run: |
+        git pull origin main
+
     - name: Push 
       run: |
        git remote set-url origin https://AbderrahmenDJEBBI:${{ secrets.REPO_ACCESS_TOKEN }}@github.com/AbderrahmenDJEBBI/Web_Scraping.git
        git push origin HEAD:main
-
