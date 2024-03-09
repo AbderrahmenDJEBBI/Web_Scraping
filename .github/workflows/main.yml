@@ -27,7 +27,6 @@ jobs:
 
     - name: Run script
       run: |
-        export CHROMEDRIVER_PATH=$PWD/chromedriver
         python tuni_cash.py
         sleep 300
 
