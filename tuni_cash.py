@@ -3,6 +3,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from datetime import datetime
+from datetime import timedelta
 import pandas as pd
 import time
 from selenium.webdriver.support import expected_conditions as EC
@@ -205,6 +206,12 @@ df_combined_all = pd.concat([df_tuni_cash, df_remitly, df_wu, df_worldremit], ig
 
 # Modify the Rate column to extract only the numerical part
 df_combined_all['Rate'] = df_combined_all['Rate'].str.extract(r'(\d+\.\d+)')
+
+# Convert "Date" column to datetime format
+df_combined_all['Date'] = pd.to_datetime(df_combined_all['Date'])
+
+# Add 1 hour to each date
+df_combined_all['Date'] += timedelta(hours=1)
 
 # Specify the CSV file path for all data
 csv_file_path_all = 'exchange_rate.csv'
