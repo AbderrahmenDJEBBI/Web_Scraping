@@ -209,8 +209,8 @@ driver = webdriver.Chrome(options=chrome_options)
 driver.get(url_myeasytransfer)
 
 try:
-    # Wait for the exchange rate element to be present
-    exchange_rate_element_myeasytransfer = WebDriverWait(driver, 120).until(
+    # Wait for the exchange rate element to be present, with retries and increased waiting time
+    exchange_rate_element_myeasytransfer = WebDriverWait(driver, 120, poll_frequency=2).until(
         EC.presence_of_element_located((By.XPATH, '//p[contains(text(), "Montant à recevoir")]/following-sibling::input'))
     )
 
