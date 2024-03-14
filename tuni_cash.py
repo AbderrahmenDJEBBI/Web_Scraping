@@ -25,6 +25,9 @@ url_western_union = "https://www.westernunion.com/fr/fr/currency-converter/eur-t
 # Define the URL for wordremit
 url_worldremit = "https://www.worldremit.com/en/tunisia?amountfrom=100.00&selectfrom=fr&currencyfrom=eur&selectto=tn&currencyto=tnd&transfer=csh"
 
+# Define the URL for MyEasyTransfer
+url_myeasytransfer = "https://www.myeasytransfer.com/"
+
 # Specify the path to the ChromeDriver executable
 chromedriver_path = os.environ.get('CHROMEDRIVER_PATH')
 
@@ -201,11 +204,46 @@ finally:
     # Close the browser window for WorldRemit
     driver_worldremit.quit()
 
+# Open the URL for MyEasyTransfer
+driver = webdriver.Chrome(options=chrome_options)
+driver.get(url_myeasytransfer)
+
+try:
+    # Wait for the exchange rate element to be present
+    exchange_rate_element_myeasytransfer = WebDriverWait(driver, 40).until(
+        EC.presence_of_element_located((By.XPATH, '//p[contains(text(), "Montant à recevoir")]/following-sibling::input'))
+    )
+
+    # Extract the exchange rate from "Montant à recevoir"
+    exchange_rate_myeasytransfer = exchange_rate_element_myeasytransfer.get_attribute('value')
+
+    # Convert exchange rate to float and divide by 100
+    exchange_rate_myeasytransfer = float(exchange_rate_myeasytransfer) / 100
+
+    # Get the current date and time
+    rate_date_time_myeasytransfer = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+    # Create a DataFrame with the exchange rate information for MyEasyTransfer
+    data_myeasytransfer = {'Date': [rate_date_time_myeasytransfer], 'Source': ['MyEasyTransfer'], 'Rate': [exchange_rate_myeasytransfer]}
+    df_myeasytransfer = pd.DataFrame(data_myeasytransfer)
+
+    # Print the formatted result for MyEasyTransfer
+    print(df_myeasytransfer)
+
+except Exception as e:
+    print(f"Unable to retrieve the exchange rate from MyEasyTransfer. Error: {str(e)}")
+    df_myeasytransfer = pd.DataFrame()  # Initialize an empty DataFrame if an error occurs
+
+finally:
+    # Close the browser window for MyEasyTransfer
+    driver.quit()
+
 # Concatenate the DataFrames for Tuni.cash, Remitly, Western Union, and WorldRemit
 df_combined_all = pd.concat([df_tuni_cash, df_remitly, df_wu, df_worldremit], ignore_index=True)
 
 # Modify the Rate column to extract only the numerical part
 df_combined_all['Rate'] = df_combined_all['Rate'].str.extract(r'(\d+\.\d+)')
+df_combined_all = pd.concat([df_combined_all, df_myeasytransfer], ignore_index=True)
 
 # Convert "Date" column to datetime format
 df_combined_all['Date'] = pd.to_datetime(df_combined_all['Date'])
@@ -226,5 +264,4 @@ else:
 
 # Print the modified DataFrame for all data
 print(df_combined_all)
-
 
