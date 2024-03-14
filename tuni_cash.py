@@ -209,12 +209,13 @@ driver = webdriver.Chrome(options=chrome_options)
 driver.get(url_myeasytransfer)
 
 try:
-    # Wait for the exchange rate element to be present, with retries and increased waiting time
-    exchange_rate_element_myeasytransfer = WebDriverWait(driver, 120, poll_frequency=2).until(
-        EC.presence_of_element_located((By.XPATH, '//p[contains(text(), "Montant à recevoir")]/following-sibling::input'))
-    )
+    # Wait for the page to fully load
+    time.sleep(30)  # Adjust the sleep time as needed
 
-    # Extract the exchange rate from "Montant à recevoir"
+    # Locate the exchange rate element using XPath
+    exchange_rate_element_myeasytransfer = driver.find_element(By.XPATH, '//p[contains(text(), "Montant à recevoir")]/following-sibling::input')
+
+    # Extract the exchange rate from the element
     exchange_rate_myeasytransfer = exchange_rate_element_myeasytransfer.get_attribute('value')
 
     # Convert exchange rate to float and divide by 100
