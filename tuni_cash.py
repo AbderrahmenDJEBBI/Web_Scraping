@@ -95,11 +95,11 @@ driver.get(url_remitly)
 
 try:
     exchange_rate_element_remitly = WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.CLASS_NAME, 'f1f3aw3g'))
+        EC.presence_of_element_located((By.CLASS_NAME, 'f4cg11h.ftw2f3l'))
     )
 
     # Extract the exchange rate and currencies for Remitly
-    rate_eur_to_tnd_remitly = exchange_rate_element_remitly.find_elements(By.CLASS_NAME, 'f1xrk329')[2].text
+    rate_eur_to_tnd_remitly = exchange_rate_element_remitly.text.strip().split('=')[1].strip().split()[0]
     rate_date_time_remitly = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     # Create a DataFrame with the exchange rate information for Remitly
@@ -116,6 +116,7 @@ except Exception as e:
 finally:
     # Close the browser window for Remitly
     driver.quit()
+
 
 # Create Firefox options for Western Union
 firefox_options_wu = Options()
@@ -265,4 +266,3 @@ else:
 
 # Print the modified DataFrame for all data
 print(df_combined_all)
-
