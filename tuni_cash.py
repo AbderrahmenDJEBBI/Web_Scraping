@@ -95,11 +95,11 @@ driver.get(url_remitly)
 
 try:
     exchange_rate_element_remitly = WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.CLASS_NAME, 'f4cg11h.ftw2f3l'))
+        EC.presence_of_element_located((By.CLASS_NAME, 'f4cg11h'))
     )
 
     # Extract the exchange rate and currencies for Remitly
-    rate_eur_to_tnd_remitly = exchange_rate_element_remitly.text.strip().split('=')[1].strip().split()[0]
+    rate_eur_to_tnd_remitly = exchange_rate_element_remitly.text.split('=')[1].strip()
     rate_date_time_remitly = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     # Create a DataFrame with the exchange rate information for Remitly
@@ -266,3 +266,4 @@ else:
 
 # Print the modified DataFrame for all data
 print(df_combined_all)
+
